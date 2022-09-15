@@ -14,15 +14,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.calculateButton.setOnClickListener{ calculateTip() }
+        binding.calculateButton.setOnClickListener { calculateTip() }
     }
 
     private fun calculateTip() {
-        val stringInTextField = binding.costOfService.text.toString()
+        val stringInTextField = binding.costOfServiceEditText.text.toString()
         val cost = stringInTextField.toDoubleOrNull()
 
         if (cost == null) {
-            binding.tipResult.text = ""
+            displayTip(0.0)
             return
         }
 
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             R.id.option_eighteen_percent -> 0.18
             else -> 0.15
         }
+
         var tip = tipPercentage * cost
 
         if (binding.roundUpSwitch.isChecked) {
@@ -42,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayTip(tip: Double) {
         val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
-
         binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
     }
 }
